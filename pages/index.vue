@@ -18,6 +18,12 @@
     </div>
 </template>
 
+<script lang="ts" >
+    export default {
+        name: 'MainPage',
+    } 
+</script>
+
 <script setup lang="ts">
     import { useProductsStore } from '@/store/products';
 

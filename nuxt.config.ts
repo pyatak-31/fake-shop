@@ -14,7 +14,7 @@ export default defineNuxtConfig({
             ]
         },
         pageTransition: { name: 'page', mode: 'out-in' },
-        layoutTransition: { name: 'page', mode: 'out-in' }
+        layoutTransition: { name: 'layout', mode: 'out-in' }
     },
     modules: [
         '@pinia/nuxt',
@@ -27,5 +27,11 @@ export default defineNuxtConfig({
                 },
             },
         },
+    },
+    router: {
+        options: {
+            linkActiveClass: 'active',
+            linkExactActiveClass: 'active'
+        }
     },
 })
