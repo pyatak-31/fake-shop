@@ -1,0 +1,28 @@
+// === COMMON ===
+html {
+    width: auto;
+    margin-right: calc(-1 * (100vw - 100%));
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    // transition: $transition;
+    
+    &.locked {
+        overflow: hidden;
+    }
+}
+
+body {
+    // background-color: $white;
+}
+
+.container {
+    max-width: $container-width;
+    width: 100%;
+    margin: 0 auto; 
+    padding-right: $container-padding;
+    padding-left: $container-padding;
+}

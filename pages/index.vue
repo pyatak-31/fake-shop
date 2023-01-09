@@ -1,8 +1,8 @@
 <template>
-    <div>
+    <div class="page">
         Main page
 
-        <ul v-if="products">
+        <ul class="page__list" v-if="products">
             <li v-for="product in products" :key="product.id">
                 {{ product.title }}
             </li>
@@ -57,6 +57,12 @@
     };
 </script>
 
-<style scoped>
+<style lang="scss">
+    .page {
 
+
+        &__list {
+            background-color: $primary;
+        }
+    }
 </style>

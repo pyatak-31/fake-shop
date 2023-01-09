@@ -1,0 +1,16 @@
+// === FONT ===
+@mixin font($color, $font-size, $line-height, $font-weight, $font-family: false) {
+    @if $font-family == 'Arial' {
+        font-family: $font-family-arial;
+    } @else {
+        font-family: $font-family-raleway;
+    }
+    @if $color != '' {
+        color: $color;
+    } @else {
+        color: inherit;
+    }
+    font-size: $font-size;
+    line-height: $line-height;
+    font-weight: $font-weight;
+}

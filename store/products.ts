@@ -17,15 +17,15 @@ export const useProductsStore = defineStore('products', () => {
             rate: number;
         }
     }
-
+    // state
     const _products = ref<Array<Product>>([]);
     const _product = ref<Product | null>(null);
-
+    // getters
     const products =  computed(() => _products);
     const product =  computed(() => _product);
 
     let id = 23;
-    
+    // actions
     const fetchAll = async () => {
         try {
             const data = await $fetch<Array<Product>>('https://fakestoreapi.com/products');
