@@ -2,17 +2,14 @@
 // Reset
 @import "./core/reset";
 // Fonts
-// @import "./scss/core/fonts";
+@import "./core/fonts";
 // Variables
 @import "./core/variables/variables";
 // Mixins
-// @import "./scss/core/mixins/mixins";
+@import "./core/mixins/mixins";
 // Common
 @import "./core/common";
-// Components
-// @import "./scss/components/components";
-// Pages
-// @import "./scss/pages/pages";
+
 
 .page-enter-active,
 .page-leave-active {

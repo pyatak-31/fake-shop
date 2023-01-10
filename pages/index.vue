@@ -3,7 +3,7 @@
         Main page
 
         <ul class="page__list" v-if="products">
-            <li v-for="product in products" :key="product.id">
+            <li  class="page__item" v-for="product in products" :key="product.id">
                 {{ product.title }}
             </li>
         </ul>
@@ -68,7 +68,12 @@
 
 
         &__list {
-            background-color: $primary;
+            
+            @include font($dark, 40px, 46px, 700);
+        }
+
+        &__item {
+            @include truncate(300px);
         }
     }
 </style>
