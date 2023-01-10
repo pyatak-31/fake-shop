@@ -1,9 +1,16 @@
 <template>
     <div class="card">
-        <form @submit.prevent>
+        <form
+            class="form"
+            @submit.prevent
+        >
             <form-input
-                label="1"
-                type="number"
+                id="name"
+                label="Имя пользователя"
+                type="text"
+                placeholder="Введите имя"
+                v-model="data.name"
+                error="oshibka oshibka oshibka oshibka oshibka oshibka oshibka oshibka oshibka"
             />
         </form>
     </div>
@@ -16,7 +23,10 @@
 </script>
 
 <script setup lang="ts">
-
+    const data = ref({
+        name: '',
+    });
+    
 </script>
 
 <style lang="scss">
