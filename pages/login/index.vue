@@ -1,5 +1,5 @@
 <template>
-    <div class="card">
+    <page-card>
         <form
             class="form"
             @submit.prevent
@@ -9,11 +9,15 @@
                 label="Имя пользователя"
                 type="text"
                 placeholder="Введите имя"
-                v-model="data.name"
-                error="oshibka oshibka oshibka oshibka oshibka oshibka oshibka oshibka oshibka"
+                v-model="data.username"
+                
             />
         </form>
-    </div>
+        <button @click="submit">2123</button>
+        <p>{{ authStore.token }}</p>
+        <p>{{  authStore.error }}</p>
+        <p>{{ authStore._obj }}</p>
+    </page-card>
 </template>
 
 <script lang="ts">
@@ -23,17 +27,31 @@
 </script>
 
 <script setup lang="ts">
+    import { useAuthStore } from '@/store/auth';
+
+    const authStore = useAuthStore();
+
+    await authStore.login({
+            username: "mor_2314",
+            password: "83r5^_"
+        });
+    
     const data = ref({
-        name: '',
+        username: '',
+        password: '',
     });
     
+    const submit = async () => {
+        // const res = await useFetch('/api/products')
+        // console.log(res.data);
+        // const { data } = await useAsyncData('authStore.login', () => authStore.login({ username: '', password: ''}))
+        await authStore.login({
+            username: "mor_2314",
+            password: "83r5^_"
+        });
+    };
 </script>
 
 <style lang="scss">
-    .card {
-        padding: 20px;
-        background-color: #fff;
-        border-radius: 10px;
-        box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.1);
-    }
+    
 </style>

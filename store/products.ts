@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { computed } from 'vue';
+import { computed, watch } from 'vue';
 
 export const useProductsStore = defineStore('products', () => {
     interface RequestProduct {
@@ -20,19 +20,18 @@ export const useProductsStore = defineStore('products', () => {
     // state
     const _products = ref<Array<Product>>([]);
     const _product = ref<Product | null>(null);
+    const _error = ref<number | undefined>(undefined);
+    
     // getters
-    const products =  computed(() => _products);
-    const product =  computed(() => _product);
-
+    
+    
     let id = 23;
     // actions
     const fetchAll = async () => {
-        try {
-            const data = await $fetch<Array<Product>>('https://fakestoreapi.com/products');
-            _products.value = data;
-        } catch (error) {
-            console.log(error);
-        }
+        const { data: products, error, pending } = await useFetch<Array<Product>>('/api/products');
+        _products.value = products.value ?? [];
+        _error.value = error.value ? error.value.statusCode : undefined;
+        return true;
     };
 
     const fetchOne = async (id: number) => {
@@ -85,5 +84,5 @@ export const useProductsStore = defineStore('products', () => {
         }
     };
   
-    return { products, product, fetchAll, fetchOne, create, deleteItem, editItem }
+    return { _products, _error,  fetchAll, fetchOne, create, deleteItem, editItem }
 });

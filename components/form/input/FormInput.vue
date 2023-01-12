@@ -57,39 +57,45 @@
 </script>
 
 <style lang="scss">
+$text-color: $dark;
+$placeholder-color: $grey-1;
+$border-color: $grey-2;
+$border-color-focus: $primary-50;
+$border-color-error: $danger;
+
 .form-input {
     display: flex;
     flex-direction: column;
 
     &__label {
         margin-bottom: 5px;
-        @include font($dark, 16px, 24px, 400);
+        @include font($text-color, 16px, 24px, 400);
         cursor: pointer;
     }
 
     &__field {
         width: 100%;
         padding: 6px 12px;
-        @include font($dark, 14px, 20px, 400);
-        border: 1px solid #E0E0E0;
+        @include font($text-color, 14px, 20px, 400);
+        border: 1px solid $border-color;
         border-radius: 4px;
 
         &::placeholder {
-            color: #757575;
+            color: $placeholder-color;
         }
 
         &:focus {
-            border-color: #AC9FF0;
+            border-color: $border-color-focus;
         }
 
         &--error {
-            border-color: #A92525;
+            border-color: $border-color-error;
         }
     }
 
     &__error {
         margin-top: 2px;
-        @include font(#A92525, 12px, 16px, 400);
+        @include font($border-color-error, 12px, 16px, 400);
     }
 }
 </style>

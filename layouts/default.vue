@@ -1,6 +1,7 @@
 <template>
     <div class="main-layout">
-        <NuxtLoadingIndicator />
+        <!-- <NuxtLoadingIndicator /> -->
+        
         
         <aside class="main-sidebar main-layout__sidebar">
             <layout-navigation />
@@ -19,10 +20,24 @@
 </script>
 
 <script setup lang="ts">
-
+// const nuxtApp = useNuxtApp();
+//   const loading = ref(false);
+//   nuxtApp.hook("page:start", () => {
+//     loading.value = true;
+//   });
+//   nuxtApp.hook("page:finish", () => {
+//     loading.value = false;
+//   });
 </script>
 
 <style lang="scss">
+    .loader {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        width: 300px;
+        height: 200px;
+    }
     .main-layout {
         display: grid;
         grid-template-columns: minmax(300px, 500px) minmax(700px, 1fr);
