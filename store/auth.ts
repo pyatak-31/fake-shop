@@ -1,37 +1,28 @@
-import { NuxtError } from 'nuxt/dist/app/composables/error';
 import { defineStore } from 'pinia';
-import { ResError } from '~~/type/error.interface';
-import { Login, LoginRequestData } from '~~/type/login.interface';
+import { LoginRequestData } from '~~/type/auth.interface';
 
 export const useAuthStore = defineStore('auth', () => {
+    const { error, isLoading, isError, clearError, startLoading, completeLoading, addError } = useStore();
     const config = useRuntimeConfig();
 
     // state
     const token = ref<string | undefined>(useCookie(config.public.ACCESS_TOKEN).value ?? undefined);
-    const authError = ref<ResError | undefined>(undefined);
-    const isLoading = ref<boolean>(false);
     
     // getters
     const isAuth =  computed<boolean>(() => Boolean(token.value));
-
-    // help
-    const clearError = () => { authError.value = undefined };
-    const startLoading = () => { isLoading.value = true };
-    const completeLoading = () => { isLoading.value = false };
-    const addError = (error: unknown) => { authError.value = (error as NuxtError).data.data; };
 
     // actions
     const login = async (body: LoginRequestData) => {
         startLoading();
         try {
-            const data = await $fetch<Login>(`/api/auth/login`, {
+            const data = await $fetch(`/api/auth/login`, {
                 method: 'POST',
                 body
             });
-            token.value = data.token;
+            token.value = data.idToken;
             clearError();
-        } catch(error) {
-            addError(error);
+        } catch(resError) {
+            addError(resError);
         } finally {
             completeLoading();
         }
@@ -49,8 +40,8 @@ export const useAuthStore = defineStore('auth', () => {
             // console.log(data);
             token.value = data[config.public.ACCESS_TOKEN];
             clearError();
-        } catch (error) {
-            addError(error);
+        } catch (resError) {
+            addError(resError);
         } finally {
             completeLoading();
         }
@@ -61,10 +52,10 @@ export const useAuthStore = defineStore('auth', () => {
             const data = await $fetch(`/api/auth/logout`);
             token.value = undefined;
             clearError();
-        } catch (error) {
-            addError(error);
+        } catch (resError) {
+            addError(resError);
         }
     };
 
-    return { token, authError, isLoading, isAuth, login, logout, refresh };
+    return { token, error, isLoading, isAuth, isError, login, logout, refresh };
 });

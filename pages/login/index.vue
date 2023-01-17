@@ -3,7 +3,7 @@
         <!-- <NuxtLayout name="error" v-if="error">
             {{ error }}
         </NuxtLayout> -->
-        <span v-if="error">
+        <span v-if="isError">
             {{ error }}
         </span>
 
@@ -50,7 +50,8 @@
     });
 
     const authStore = useAuthStore();
-    const error = computed(() => authStore.authError)
+    const error = computed(() => authStore.error);
+    const isError = computed(() => authStore.isError);
     // console.log(error.value?.message);
 
     const data = ref({
