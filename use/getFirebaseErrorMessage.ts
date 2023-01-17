@@ -1,8 +1,6 @@
-interface FirebaseError {
-    message: string;
-}
+import { FirebaseError } from "~~/type/error.interface";
 
-export const getErrorMessage = (errors: Array<FirebaseError>) => {
+export const getFirebaseErrorMessage = (errors: Array<FirebaseError>): string => {
     let answer = 'Не удалось определить ошибку';
     errors.forEach(({ message }) => {
         switch (message) {

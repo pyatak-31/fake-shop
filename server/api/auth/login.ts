@@ -18,7 +18,7 @@ export default defineEventHandler(async (event) => {
         setCookie(event, config.public.REFRESH_TOKEN, data.refreshToken);
     
         return data;
-    } catch (resError) {
-        sendResError(event, resError);
+    } catch (error) {
+        sendResError(event, error);
     }
 });

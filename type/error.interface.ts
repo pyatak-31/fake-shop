@@ -7,3 +7,7 @@ export interface ResError {
     message: string;
     errors?: Array<ErrorItem>
 }
+
+export interface FirebaseError {
+    message: string;
+}

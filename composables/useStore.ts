@@ -12,5 +12,18 @@ export const useStore = () => {
     const completeLoading = () => { isLoading.value = false };
     const addError = (resError: unknown) => { error.value = (resError as NuxtError).data.data; };
 
-    return { error, isLoading, isError, clearError, startLoading, completeLoading, addError };
+    const baseAsyncAction = async (callback: Function) => {
+        startLoading();
+        try {
+            await callback();
+            clearError();
+        } catch (resError) {
+            console.log(resError);
+            addError(resError);
+        } finally {
+            completeLoading();
+        }
+    };
+
+    return { error, isLoading, isError, baseAsyncAction };
 };

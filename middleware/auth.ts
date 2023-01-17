@@ -12,7 +12,6 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
     const authStore = useAuthStore();
        
     if (to.path !== '/login' && authStore.isAuth) {
-        await authStore.refresh();
         if (!isValid(authStore.token!)) {
             await authStore.refresh();
         }
