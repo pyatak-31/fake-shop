@@ -4,7 +4,7 @@
         
         
         <aside class="main-sidebar main-layout__sidebar">
-            <layout-navigation />
+            <layout-navigation @logout="logout" />
         </aside>
         
         <main class="main-layout__content">
@@ -14,12 +14,16 @@
 </template>
 
 <script lang="ts" >
-    export default {
-        name: 'MainLayout',
-    } 
+    export default { name: 'MainLayout' } 
 </script>
 
 <script setup lang="ts">
+    import { useAuthStore } from '@/store/auth';
+    const authStore = useAuthStore();
+
+    const logout = () => {
+        authStore.logout();
+    };
 // const nuxtApp = useNuxtApp();
 //   const loading = ref(false);
 //   nuxtApp.hook("page:start", () => {

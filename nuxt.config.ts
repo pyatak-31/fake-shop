@@ -34,4 +34,13 @@ export default defineNuxtConfig({
             linkExactActiveClass: 'active'
         }
     },
+    runtimeConfig: {
+        // Config within public will be also exposed to the client
+        API_KEY: process.env.API_KEY,
+        public: {
+            BASE_URL: process.env.BASE_URL,
+            ACCESS_TOKEN: process.env.ACCESS_TOKEN,
+            REFRESH_TOKEN: process.env.REFRESH_TOKEN,
+        }
+      },
 })

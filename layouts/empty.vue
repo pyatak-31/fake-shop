@@ -5,8 +5,14 @@
     </div>
 </template>
 
-<script setup lang="ts">
+<script lang="ts">
+    export default { name: 'empty' }
+</script>
 
+<script setup lang="ts">
+    // onBeforeMount(() => {
+    //     console.log(123);
+    // });
 </script>
 
 <style lang="scss">

@@ -20,18 +20,46 @@ export const useProductsStore = defineStore('products', () => {
     // state
     const _products = ref<Array<Product>>([]);
     const _product = ref<Product | null>(null);
-    const _error = ref<number | undefined>(undefined);
+    const _error = ref<any>(undefined);
+    const isLoading = ref<boolean>(false);
     
     // getters
     
     
     let id = 23;
     // actions
+    // const fetchAll = async () => {
+    //     if (!_products.value.length) {
+    //         const { data: products, error, pending } = await useFetch<Array<Product>>('/api/products');
+    //         _products.value = products.value ?? [];
+    //         _error.value = error.value ? error.value.statusMessage : undefined;
+    //     }
+    //     return true;
+    // };
+
+    // const fetchAll = async () => {
+    //     if (!_products.value.length) {
+    //         const { data: products, error, pending } = await useFetch<Array<Product>>('/api/products');
+    //         _products.value = products.value ?? [];
+    //         _error.value = error.value ? error.value.statusMessage : undefined;
+    //         return {data: products.value, error, pending};
+    //     }
+    // };
+
     const fetchAll = async () => {
-        const { data: products, error, pending } = await useFetch<Array<Product>>('/api/products');
-        _products.value = products.value ?? [];
-        _error.value = error.value ? error.value.statusCode : undefined;
-        return true;
+        if (!_products.value.length) {
+            isLoading.value = true;
+            try {
+                const products = await $fetch<Array<Product>>('/api/products');
+                _products.value = products;
+            } catch (error) {
+                
+                _error.value = error;
+            } finally {
+                isLoading.value = true;
+            }
+        }
+        // return true;
     };
 
     const fetchOne = async (id: number) => {
@@ -43,16 +71,29 @@ export const useProductsStore = defineStore('products', () => {
         }
     };
 
+    // const create = async (body: RequestProduct) => {
+    //     const { data: product, error, pending } = await useFetch<Product>('/api/products/create', {
+    //         method: 'POST',
+    //         body
+    //     });
+    //     if (product.value) {
+    //         _products.value.push({...product.value, id})
+    //         id += 1;
+    //     }
+    //     // _error.value = error.value ? error.value.statusMessage : undefined;
+    //     return true;
+    // };
+
     const create = async (body: RequestProduct) => {
         try {
-            const data = await $fetch<Product>(`https://fakestoreapi.com/products`, {
+            const data = await $fetch<Product>('/api/products/create', {
                 method: 'POST',
                 body
             });
-            _products.value.push({...data, id});
+            _products.value.push({...data, id})
             id += 1;
         } catch (error) {
-            console.log(error);
+            
         }
     };
 
@@ -84,5 +125,5 @@ export const useProductsStore = defineStore('products', () => {
         }
     };
   
-    return { _products, _error,  fetchAll, fetchOne, create, deleteItem, editItem }
+    return { _products, _error, isLoading,  fetchAll, fetchOne, create, deleteItem, editItem }
 });

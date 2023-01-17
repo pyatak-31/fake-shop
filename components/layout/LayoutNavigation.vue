@@ -16,11 +16,26 @@
                     {{ link.name }}
                 </nuxt-link>   
             </li>
+
+            <li class="main-nav__item">
+                <button
+                    class="main-nav__link"
+                    @click="logout"
+                >
+                    Logout
+                </button>   
+            </li>
         </ul>
     </nav>
 </template>
 
 <script setup lang="ts">
+    import {} from '#app';
+    
+    const emits = defineEmits<{
+        (e: 'logout'): void
+    }>()
+
     const links = [
         {
             name: 'Главная',
@@ -50,6 +65,10 @@
             return true;
         }
     };
+
+    const logout = () => {
+        emits('logout');
+    }
 </script>
 
 <style lang="scss">

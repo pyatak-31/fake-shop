@@ -1,17 +1,29 @@
 <template>
     <div class="page">
         <!-- <span v-if="isLoading">{{ isLoading }}</span> -->
-        <div v-if="isLoading">load</div>
+        <div v-if="isLoading && !products.length">load</div>
+        <p v-else-if="error">
+            {{ error }}
+        </p>
         <div v-else>
-            <ul class="page__list">
-                <li  class="page__item" v-for="product in products" :key="product.id">
-                    {{ product.title }}
-                </li>
-            </ul>
-            <p v-if="error">
-                {{ error }}
-            </p>
-        </div>
+            
+            
+                <ul class="page__list">
+                    <li  class="page__item" v-for="product in products" :key="product.id">
+                        {{ product.title }}
+                    </li>
+                </ul>
+                <span v-if="isLoadingCreate">Creating...</span>
+                <button @click="add">Crerate</button>
+            
+            </div>
+
+
+
+        
+
+
+
         
         <!-- <span v-if="pending">Loading</span> -->
         <!-- <div v-else> -->
@@ -36,33 +48,36 @@
         <button @click="deleteProduct">Delete</button>
         <button @click="editProduct">Edit</button> -->
         <!-- </div> -->
-        
+        <!-- <span v-if="pending">..................</span> -->
     </div>
 </template>
 
 <script lang="ts" >
-    export default {
-        name: 'MainPage',
-    } 
+    definePageMeta({ middleware: ["auth"] });
+    export default { name: 'MainPage' }
 </script>
 
 <script setup lang="ts">
-    const { products, error, fetchAll } = useProducts();
-    const isLoading = await fetchAll();
+
+    const { products, error, isLoading, fetchAll, create, add, isLoadingCreate } = useProducts();
+    await fetchAll();
+
+    // let load = ref(false)
+    // const { data, pending, error: error2 } = useLazyAsyncData('count', async () => await fetchAll())
+    // console.log(data);
     
     
-    // import { useProductsStore } from '@/store/products';
-   
-    // const productsStore = useProductsStore();
-    // const { pending } = await useLazyAsyncData('productas', () => productsStore.fetchAll())
-    // const products = computed(() => productsStore._products);
+    // let isLoadingCreate = ref(false)
+    // const add = async () => {
+    //     isLoadingCreate = await create();
+    // }
     
-    // await productsStore.fetchAll(); 
+    
+ 
     // await productsStore.fetchOne(1);
     // const products = productsStore.products;
     // const product = productsStore.product;
-    // const wait = productsStore.isLoading;
-
+    
     // const create = async () => {
     //     const body = {
     //         category: 'string',

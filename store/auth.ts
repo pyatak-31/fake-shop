@@ -1,49 +1,70 @@
+import { NuxtError } from 'nuxt/dist/app/composables/error';
 import { defineStore } from 'pinia';
+import { ResError } from '~~/type/error.interface';
+import { Login, LoginRequestData } from '~~/type/login.interface';
 
 export const useAuthStore = defineStore('auth', () => {
-    interface Token {
-        token: string;
-    }
+    const config = useRuntimeConfig();
 
-    interface Data {
-        token: string;
-        
-    }
-
-    interface AuthData {
-        username: string;
-        password: string;
-    }
-    
     // state
-    const _token = ref<string | null>(null);
-    const _error = ref(null);
-    const _isLoadind = ref(false);
-    const _obj: any = ref(null);
-
-    // getters
-    const token =  computed(() => _token);
-    const error =  computed(() => _error);
-    const isLoadind =  computed(() => _isLoadind);
+    const token = ref<string | undefined>(useCookie(config.public.ACCESS_TOKEN).value ?? undefined);
+    const authError = ref<ResError | undefined>(undefined);
+    const isLoading = ref<boolean>(false);
     
-    // actions
-    const login = async (body: AuthData) => {
-        const {data, error, pending } = await useFetch<Data>(`https://fakestoreapi.com/auth/login`, {
-            method: 'POST',
-            body
-        });
-        // console.log(data.value);
-        // console.log(error.value?.response?._data);
-        
-        _token.value = data.value ? data.value.token : null;
-        _error.value = error.value ? error.value.response?._data : null;
-        _isLoadind.value = pending.value;
+    // getters
+    const isAuth =  computed<boolean>(() => Boolean(token.value));
 
-        // const res = await useFetch('/api/products')
-        // _obj.value = res.data
-        
+    // help
+    const clearError = () => { authError.value = undefined };
+    const startLoading = () => { isLoading.value = true };
+    const completeLoading = () => { isLoading.value = false };
+    const addError = (error: unknown) => { authError.value = (error as NuxtError).data.data; };
+
+    // actions
+    const login = async (body: LoginRequestData) => {
+        startLoading();
+        try {
+            const data = await $fetch<Login>(`/api/auth/login`, {
+                method: 'POST',
+                body
+            });
+            token.value = data.token;
+            clearError();
+        } catch(error) {
+            addError(error);
+        } finally {
+            completeLoading();
+        }
+    };
+    
+    const refresh = async () => {
+        startLoading();
+        try {
+            const data = await $fetch(`/api/auth/refresh`, {
+                method: 'POST',
+                body: {
+                    refresh_token: useCookie(config.public.REFRESH_TOKEN).value
+                }
+            });
+            // console.log(data);
+            token.value = data[config.public.ACCESS_TOKEN];
+            clearError();
+        } catch (error) {
+            addError(error);
+        } finally {
+            completeLoading();
+        }
+    }; 
+
+    const logout = async () => {
+        try {
+            const data = await $fetch(`/api/auth/logout`);
+            token.value = undefined;
+            clearError();
+        } catch (error) {
+            addError(error);
+        }
     };
 
-    return { token, error, isLoadind, login, _obj }
+    return { token, authError, isLoading, isAuth, login, logout, refresh };
 });
-
