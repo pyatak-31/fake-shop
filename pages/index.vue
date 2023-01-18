@@ -52,12 +52,13 @@
     </div>
 </template>
 
-<script lang="ts" >
-    definePageMeta({ middleware: ["auth"] });
+<script lang="ts">
     export default { name: 'MainPage' }
 </script>
 
 <script setup lang="ts">
+
+    definePageMeta({ middleware: ["auth"] });
 
     const { products, error, isLoading, fetchAll, create, add, isLoadingCreate } = useProducts();
     await fetchAll();

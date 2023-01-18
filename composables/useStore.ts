@@ -5,7 +5,8 @@ export const useStore = () => {
     const error = ref<ResError | undefined>(undefined);
     const isLoading = ref<boolean>(false);
 
-    const isError = computed<boolean>(() => Boolean(error.value));
+    const hasError = computed<boolean>(() => Boolean(error.value));
+    const errorMessage = computed(() => error.value?.message);
 
     const clearError = () => { error.value = undefined };
     const startLoading = () => { isLoading.value = true };
@@ -25,5 +26,5 @@ export const useStore = () => {
         }
     };
 
-    return { error, isLoading, isError, baseAsyncAction };
+    return { error, errorMessage, isLoading, hasError, baseAsyncAction };
 };

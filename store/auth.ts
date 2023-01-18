@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 import { LoginRequestData } from '~~/type/auth.interface';
 
 export const useAuthStore = defineStore('auth', () => {
-    const { error, isLoading, isError, baseAsyncAction } = useStore();
+    const { error, errorMessage, isLoading, hasError, baseAsyncAction } = useStore();
     const config = useRuntimeConfig();
 
     // state
@@ -41,5 +41,5 @@ export const useAuthStore = defineStore('auth', () => {
         });
     };
 
-    return { token, error, isLoading, isAuth, isError, login, logout, refresh };
+    return { token, error, errorMessage, isLoading, isAuth, hasError, login, logout, refresh };
 });

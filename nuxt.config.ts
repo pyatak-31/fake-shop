@@ -18,6 +18,7 @@ export default defineNuxtConfig({
     },
     modules: [
         '@pinia/nuxt',
+        'vite-plugin-vue-type-imports/nuxt',
     ],
     vite: {
         css: {

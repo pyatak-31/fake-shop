@@ -1,6 +1,6 @@
 <template>
     <div class="main-layout">
-        <!-- <NuxtLoadingIndicator /> -->
+        <NuxtLoadingIndicator color="red" />
         
         
         <aside class="main-sidebar main-layout__sidebar">
@@ -18,12 +18,10 @@
 </script>
 
 <script setup lang="ts">
-    import { useAuthStore } from '@/store/auth';
-    const authStore = useAuthStore();
+    const { logout } = useAuth();
+    
 
-    const logout = () => {
-        authStore.logout();
-    };
+    
 // const nuxtApp = useNuxtApp();
 //   const loading = ref(false);
 //   nuxtApp.hook("page:start", () => {
