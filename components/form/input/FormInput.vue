@@ -16,7 +16,7 @@
             class="form-input__label"
             v-if="label"
         >
-            {{ label }}
+            {{ label }}<span v-if="required">*</span>
         </label>
 
         <small
@@ -27,6 +27,8 @@
         </small>
     </div>
 </template>
+
+<script lang="ts">export default { name: 'FormInput' }</script>
 
 <script setup lang="ts">
     type InputType = 'text' | 'number' | 'password' | 'email' | 'url' | 'tel';

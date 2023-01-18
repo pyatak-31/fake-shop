@@ -40,8 +40,10 @@
 </script>
 
 <style lang="scss">
+    $text-color: $dark;
+
     .title {
-        @include font($dark, '', '', 700);
+        @include font($text-color, '', '', 700);
 
         &--1 {
             @include font('', 40px, 48px, '');
