@@ -83,6 +83,7 @@
             flex-direction: column;
             gap: 15px;
             margin-top: 30px;
+            
         }
 
         &__link {

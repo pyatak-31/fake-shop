@@ -2,11 +2,14 @@
     <div class="main-layout">
         <NuxtLoadingIndicator color="red" />
         
+        <button class="toggle-menu-btn" @click="toggleMenu">1</button>
         
-        <aside class="main-sidebar main-layout__sidebar">
-            <layout-navigation @logout="logout" />
-        </aside>
-        
+        <layout-sidebar
+            class="main-layout__sidebar"
+            :isOpenMenu="isOpenMenu"
+            @logout="logout"
+        />
+       
         <main class="main-layout__content">
             <slot />
         </main>
@@ -20,6 +23,10 @@
 <script setup lang="ts">
     const { logout } = useAuth();
     
+    const isOpenMenu = ref(true);
+    const toggleMenu = () => {
+        isOpenMenu.value = !isOpenMenu.value;
+    };
 
     
 // const nuxtApp = useNuxtApp();
@@ -41,20 +48,29 @@
         height: 200px;
     }
     .main-layout {
-        display: grid;
-        grid-template-columns: minmax(300px, 500px) minmax(700px, 1fr);
+        position: relative;
+        display: flex;
         min-height: 100vh;
 
         &__sidebar {
             position: relative;
-            background-color: $white;
-            box-shadow: 0 0 15px -15px $dark;
         }
 
         &__content {
+            flex: 1;
             padding: 30px;
             background-color: $main-bg;
             min-height: 150vh;
         }
+    }
+
+    .toggle-menu-btn {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 1;
+        width: 30px;
+        height: 100%;
+        background-color: $primary;
     }
 </style>
