@@ -28,7 +28,7 @@
     </div>
 </template>
 
-<script lang="ts">export default { name: 'FormInput' }</script>
+<script lang="ts">export default { name: 'UiInput' }</script>
 
 <script setup lang="ts">
     type InputType = 'text' | 'number' | 'password' | 'email' | 'url' | 'tel';

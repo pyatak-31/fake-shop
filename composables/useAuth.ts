@@ -8,8 +8,8 @@ export const useAuth = () => {
     const hasError = computed(() => authStore.hasError);
     
     const data = ref({
-        email: 'oleg@mail.ru',//oleg@mail.ru
-        password: '123456',//123456
+        email: '',
+        password: '',
     });
     
     const isEmptyData = computed(() => !data.value.email.length || !data.value.password.length);

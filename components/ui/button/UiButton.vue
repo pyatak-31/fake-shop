@@ -91,16 +91,16 @@
 <style scoped lang="scss">
     $padding: 8px 24px;
     $padding-small: 4px 16px;
-    $light-text-color: $white;
-    $dark-text-color: $dark;
-    $shadow-primary: 0px 2px 4px rgba(58, 87, 232, 0.3);
-    $shadow-success: 0px 2px 4px rgba(26, 160, 83, 0.3);
-    $shadow-danger: 0px 2px 4px rgba(192, 50, 33, 0.3);
-    $shadow-warning: 0px 2px 4px rgba(241, 106, 27, 0.3);
-    $shadow-info: 0px 2px 4px rgba(7, 154, 162, 0.3);
-    $shadow-secondary: 0px 2px 4px rgba(108, 117, 125, 0.3);
-    $shadow-light: 0px 2px 4px rgba(222, 226, 230, 0.3);
-    $shadow-dark: 0px 2px 4px rgba(33, 37, 41, 0.3);
+    $themes: (
+        'primary': ($primary, $primary-hover, $shadow-primary),
+        'success': ($success, $success-hover, $shadow-success),
+        'danger': ($danger, $danger-hover, $shadow-danger),
+        'warning': ($warning, $warning-hover, $shadow-warning),
+        'info': ($info, $info-hover, $shadow-info),
+        'secondary': ($secondary, $secondary-hover, $shadow-secondary),
+        'light': ($light, $light-hover, $shadow-light, $dark),
+        'dark': ($dark, $dark-hover, $shadow-dark)
+    );
 
     @mixin theme($theme, $bg, $bg-hover, $shadow, $color:'') {
         &--#{ $theme } {
@@ -147,7 +147,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        @include font($light-text-color, '', '', 400);
+        @include font($white, '', '', 400);
         text-transform: capitalize;
         border-radius: 4px;
         transition: box-shadow .3s, background-color .3s;
@@ -160,27 +160,21 @@
         @include size('large', $padding, 19px, 33px, 24px);
         @include size('small', $padding-small, 13px, 17px, 16px);
         
-        @include theme('primary', $primary, $primary-hover, $shadow-primary);
-        @include theme('success', $success, $success-hover, $shadow-success);
-        @include theme('danger', $danger, $danger-hover, $shadow-danger);
-        @include theme('warning', $warning, $warning-hover, $shadow-warning);
-        @include theme('info', $info, $info-hover, $shadow-info);
-        @include theme('secondary', $secondary, $secondary-hover, $shadow-secondary);
-        @include theme('light', $light, $light-hover, $shadow-light, $dark-text-color);
-        @include theme('dark', $dark, $dark-hover, $shadow-dark);
+        @each $theme, $params in $themes {
+            @if $theme == 'light' {
+                @include theme($theme, nth($params, 1), nth($params, 2), nth($params, 3), nth($params, 4));
+            } @else {
+                @include theme($theme, nth($params, 1), nth($params, 2), nth($params, 3));
+            }
+        }
         
         &--outline {
             background-color: $white;
             transition: box-shadow .3s, color .3s, border-color .3s;
 
-            @include outline('primary', $primary, $primary-hover, $shadow-primary);
-            @include outline('success', $success, $success-hover, $shadow-success);
-            @include outline('danger', $danger, $danger-hover, $shadow-danger);
-            @include outline('warning', $warning, $warning-hover, $shadow-warning);
-            @include outline('info', $info, $info-hover, $shadow-info);
-            @include outline('secondary', $secondary, $secondary-hover, $shadow-secondary);
-            @include outline('light', $light, $light-hover, $shadow-light);
-            @include outline('dark', $dark, $dark-hover, $shadow-dark);
+            @each $theme, $params in $themes {
+                @include outline($theme, nth($params, 1), nth($params, 2), nth($params, 3));
+            }
         }
 
         &--disabled {

@@ -2,7 +2,7 @@
     <renderTitle />
 </template>
 
-<script lang="ts">export default { name: 'TextTitle' }</script>
+<script lang="ts">export default { name: 'UiTitle' }</script>
 
 <script setup lang="ts">
     import {} from "#app";
