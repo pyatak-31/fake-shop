@@ -24,10 +24,13 @@
 </script>
 
 <style lang="scss">
+    $width: 300px;
+
     .main-sidebar {
-        width: 300px;
+        width: $width;
         background-color: $white;
         box-shadow: 0 0 15px -15px $dark;
+        will-change: width;
     }
 
     .main-sidebar-enter-active {
@@ -42,7 +45,7 @@
             overflow: hidden;
         }
         100% {
-            width: 300px;
+            width: $width;
         }
     }
 </style>
